@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    TOTEMBO
+{% endblock title %}
+
+{% block main %}
+<main>
+
+    <!-- BLOCKS GUARANTEES START -->
+    {% include 'totembo/components/blocks.html' %}
+    <!-- BLOCKS GUARANTEES END -->
+
+    <!-- SECTION QUARTZ EDITION START -->
+    {% include 'totembo/components/section_quartz.html' %}
+    <!-- SECTION QUARTZ EDITION END -->
+    
+    <!-- SECTION AUTOMATIC EDITION START -->
+    {% include 'totembo/components/section_automatic.html' %} 
+    <!-- SECTION AUTOMATIC EDITION END -->
+    
+    <!-- SECTION CHAIN COLLECTION START -->
+    {% include 'totembo/components/section_chain.html' %}
+    <!-- SECTION CHAIN COLLECTION END -->
+
+    <!-- SLIDER BLOCK START -->
+    {% include 'totembo/components/slider.html' %}
+    <!-- SLIDER BLOCK END -->
+
+    <!-- BLOCK EMAIL FORM START -->
+    {% include 'totembo/components/block.html' %}
+    <!-- BLOCK EMAIL FORM END -->
+
+</main>
+{% endblock main %}
