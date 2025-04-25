@@ -3,13 +3,16 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
 from totembo.forms import SignUpForm, SignInForm
+from totembo.models import Category
 
 
 # class Index(ListView):
 #     template_name = "totembo/index.html"
 
-def index(request):
-    return render(request,"totembo/index.html")
+class Index(ListView):
+    model = Category
+    template_name = "totembo/index.html"
+    context_object_name = "data"
 
 
 def signup(request):
