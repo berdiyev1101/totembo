@@ -52,3 +52,32 @@ class Category(models.Model):
         verbose_name = "Category"
         verbose_name_plural = "Categories"
 
+
+
+class Product(models.Model):
+    title = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="images/")
+    price = models.CharField(max_length=15)
+    info = models.TextField(max_length=200)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_image(self):
+            return self.image.url
+
+
+    class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
+
+
+class Vendor(models.Model):
+    title = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="images/")
+
+    def __str__(self):
+        return self.title
+
+

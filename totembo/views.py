@@ -2,8 +2,9 @@ from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
+from django.db import models
 from totembo.forms import SignUpForm, SignInForm
-from totembo.models import Category
+from totembo.models import Category, Product, Vendor
 
 
 # class Index(ListView):
@@ -13,6 +14,15 @@ class Index(ListView):
     model = Category
     template_name = "totembo/index.html"
     context_object_name = "data"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['products'] = Product.objects.all()
+        context['vendors'] = Vendor.objects.all()
+        return context
+
+
 
 
 def signup(request):
@@ -52,6 +62,17 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect("signin")
+
+class GetProducts(ListView):
+    model = Product
+    context_object_name = "products"
+    template_name ="totembo/index.html"
+
+    def get_queryset(self):
+        return Product.objects.all()
+
+
+
 
 
 
