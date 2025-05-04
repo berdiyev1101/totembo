@@ -5,5 +5,6 @@ urlpatterns = [
     path("signin/", signin, name="signin"),
     path("signup/", signup, name="signup"),
     path("signout/", signout, name="signout"),
-    path("", GetProducts.as_view(), name="product")
+    path("products/", GetProducts.as_view(), name="product"),
+    path("category/<int:pk>/", ProductByCategory.as_view(), name="category")
 ]

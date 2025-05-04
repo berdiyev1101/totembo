@@ -81,3 +81,16 @@ class Vendor(models.Model):
         return self.title
 
 
+class Gallery(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name="gallery")
+    image = models.ImageField(upload_to="images/")
+
+class ChainProduct(models.Model):
+    title = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="images/")
+    price = models.CharField(max_length=15)
+    info = models.TextField(max_length=200)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.title

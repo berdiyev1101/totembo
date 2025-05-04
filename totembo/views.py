@@ -4,7 +4,7 @@ from django.views.generic import ListView
 
 from django.db import models
 from totembo.forms import SignUpForm, SignInForm
-from totembo.models import Category, Product, Vendor
+from totembo.models import Category, Product, Vendor, ChainProduct
 
 
 # class Index(ListView):
@@ -20,6 +20,8 @@ class Index(ListView):
         context['categories'] = Category.objects.all()
         context['products'] = Product.objects.all()
         context['vendors'] = Vendor.objects.all()
+        context['chains'] = ChainProduct.objects.all()
+
         return context
 
 
@@ -70,6 +72,23 @@ class GetProducts(ListView):
 
     def get_queryset(self):
         return Product.objects.all()
+
+class GetProductChain(ListView):
+    model = ChainProduct
+    template_name = "totembo/index.html"
+    context_object_name = "chains"
+
+    def get_queryset(self):
+        return ChainProduct.objects.all()\
+
+class ProductByCategory(Index):
+    model = Product
+    context_object_name = "products"
+    template_name = 'totembo/index.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(category_id=self.kwargs['pk'])
+
 
 
 

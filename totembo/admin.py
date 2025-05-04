@@ -6,6 +6,7 @@ admin.site.register(CustomUser)
 admin.site.register(Category)
 admin.site.register(Product)
 admin.site.register(Vendor)
+admin.site.register(ChainProduct)
 
 
 
