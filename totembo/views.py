@@ -4,7 +4,7 @@ from django.views.generic import ListView
 
 from django.db import models
 from totembo.forms import SignUpForm, SignInForm
-from totembo.models import Category, Product, Vendor, ChainProduct
+from totembo.models import Category, Product, Vendor
 
 
 # class Index(ListView):
@@ -18,9 +18,10 @@ class Index(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
-        context['products'] = Product.objects.all()
+        context['quartz_products'] = Product.objects.all()[:4]
+        context['automatic_products'] = Product.objects.all()[4:8]
         context['vendors'] = Vendor.objects.all()
-        context['chains'] = ChainProduct.objects.all()
+        context['chains'] = Product.objects.all()[8:12]
 
         return context
 
@@ -73,21 +74,15 @@ class GetProducts(ListView):
     def get_queryset(self):
         return Product.objects.all()
 
-class GetProductChain(ListView):
-    model = ChainProduct
-    template_name = "totembo/index.html"
-    context_object_name = "chains"
 
-    def get_queryset(self):
-        return ChainProduct.objects.all()\
 
-class ProductByCategory(Index):
-    model = Product
-    context_object_name = "products"
-    template_name = 'totembo/index.html'
 
-    def get_queryset(self):
-        return Product.objects.filter(category_id=self.kwargs['pk'])
+def product_by_category(request,pk):
+    products = Product.objects.filter(pk=pk)
+    context = {
+        "products":products
+    }
+    return render(request,"totembo/category_detail.html",context)
 
 
 

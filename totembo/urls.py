@@ -6,5 +6,5 @@ urlpatterns = [
     path("signup/", signup, name="signup"),
     path("signout/", signout, name="signout"),
     path("products/", GetProducts.as_view(), name="product"),
-    path("category/<int:pk>/", ProductByCategory.as_view(), name="category")
+    path("category/<int:pk>/", product_by_category, name="category")
 ]

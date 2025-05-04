@@ -55,10 +55,17 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    COLOR_CHOICES = [
+        ("gold","gold"),
+        ("yellow", "yellow"),
+        ("black", "black"),
+        ("silver", "silver")
+    ]
     title = models.CharField(max_length=50)
     image = models.ImageField(upload_to="images/")
     price = models.CharField(max_length=15)
     info = models.TextField(max_length=200)
+    color = models.CharField(max_length=30, choices=COLOR_CHOICES, default="gold")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -85,12 +92,3 @@ class Gallery(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name="gallery")
     image = models.ImageField(upload_to="images/")
 
-class ChainProduct(models.Model):
-    title = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="images/")
-    price = models.CharField(max_length=15)
-    info = models.TextField(max_length=200)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return self.title
