@@ -76,13 +76,17 @@ class GetProducts(ListView):
 
 
 
+class Product_By_Catagory(ListView):
+    model = Product
+    context_object_name = "products"
+    template_name = "totembo/category_detail.html"
+    paginate_by = 2
 
-def product_by_category(request,pk):
-    products = Product.objects.filter(pk=pk)
-    context = {
-        "products":products
-    }
-    return render(request,"totembo/category_detail.html",context)
+    def get_queryset(self):
+        category = Category.objects.get(pk=self.kwargs['pk'])
+        products = Product.objects.filter(category=category)
+        return products
+
 
 
 
