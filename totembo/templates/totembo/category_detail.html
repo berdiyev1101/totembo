@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
-
 {% block title %}
     Category
 {% endblock title %}
-
 {% block main %}
 <main>
         <!-- SALES BLOCK START -->
@@ -30,10 +28,10 @@
                                 Color
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownColor">
-                                <li><a class="dropdown-item" href="#">Rose gold</a></li>
-                                <li><a class="dropdown-item" href="#">Gold</a></li>
-                                <li><a class="dropdown-item" href="#">Wave silver</a></li>
-                                <li><a class="dropdown-item" href="#">Black night</a></li>
+                                <li><a class="dropdown-item" name="color" value="gold" href="?color=gold">Gold</a></li>
+                                <li><a class="dropdown-item" name="color" value="yellow" href="?color=yellow">Yellow</a></li>
+                                <li><a class="dropdown-item" name="color" value="silver" href="?color=silver">Silver</a></li>
+                                <li><a class="dropdown-item" name="color" value="black" href="?color=black">Black</a></li>
                             </ul>
                         </div>
                         <div class="dropdown pt-2 pt-lx-0">
@@ -42,9 +40,8 @@
                                 Strap type
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownStrapType">
-                                <li><a class="dropdown-item" href="#">Metal</a></li>
-                                <li><a class="dropdown-item" href="#">Leather</a></li>
-                                <li><a class="dropdown-item" href="#">Rubber</a></li>
+                                <li><a class="dropdown-item" href="?sort=title">A-Z</a></li>
+                                <li><a class="dropdown-item" href="?sort=-title">Z-A</a></li>
                             </ul>
                         </div>
                         <div class="dropdown pt-2 pt-lx-0">
@@ -53,20 +50,20 @@
                                 Sort by
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownSort">
-                                <li><a class="dropdown-item" href="#">Whats's New</a></li>
-                                <li><a class="dropdown-item" href="#">Price low to high</a></li>
-                                <li><a class="dropdown-item" href="#">Price high to low </a></li>
+                                <li><a class="dropdown-item" href="?sort=price">Price low to high</a></li>
+                                <li><a class="dropdown-item" href="?sort=-price">Price high to low </a></li>
                             </ul>
                         </div>
                         <div class="dropdown pt-2 pt-lx-0">
                             <button class="products_filter-dropdown dropdown-toggle" type="button"
                                 id="dropdownWatchType" data-bs-toggle="dropdown" aria-expanded="false">
-                                Watch type
+                                Price
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownWatchType">
-                                <li><a class="dropdown-item" href="#">Quartz watches</a></li>
-                                <li><a class="dropdown-item" href="#">Automatic watches</a></li>
-                                <li><a class="dropdown-item" href="#">Smart watches</a></li>
+                                <li><a class="dropdown-item" name="price" value="0-100" href="?price=0-100">0-100</a></li>
+                                <li><a class="dropdown-item" name="price" value="100-200" href="?price=100-200">100-200</a></li>
+                                <li><a class="dropdown-item" name="price" value="200-300" href="?price=200-300">200-300</a></li>
+                                <li><a class="dropdown-item" name="price" value="300-400" href="?price=300-400">300-400</a></li>
                             </ul>
                         </div>
                     </div>
@@ -82,7 +79,8 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="product_card text-center">
                             <div class="product_card-basket">
-                                <a href="#" class="product_card_basket-link basket_icon">
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'like' product.pk %}" class="product_card_basket-link basket_icon">
                                     <svg width="20" height="18" viewBox="0 0 20 18" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -90,8 +88,18 @@
                                             stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </a>
+                                {% else %}
+                                <a href="{% url 'signin' %}" class="product_card_basket-link basket_icon">
+                                    <svg width="20" height="18" viewBox="0 0 20 18" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M10 3.42445C10.1556 3.42445 10.3022 3.35205 10.3969 3.2286C10.3969 3.22853 10.397 3.22847 10.397 3.2284L10.3972 3.22815L10.4006 3.22378L10.4168 3.20326C10.4318 3.18451 10.4549 3.15589 10.4858 3.11882C10.5476 3.04462 10.6402 2.93682 10.7604 2.80662C11.0013 2.5456 11.3498 2.19785 11.7789 1.85114C12.6505 1.14689 13.7893 0.5 15 0.5C17.5018 0.5 19.5 2.45298 19.5 4.82534C19.5 5.82642 19.2983 7.54989 18.0555 9.65158C16.8108 11.7565 14.5058 14.2679 10.2563 16.8148C10.1799 16.86 10.0912 16.8844 10 16.8844C9.90878 16.8844 9.82009 16.86 9.74371 16.8148C5.49418 14.2679 3.18917 11.7565 1.94451 9.65158C0.701742 7.54989 0.5 5.82642 0.5 4.82534C0.5 2.45298 2.4982 0.5 5 0.5C6.21069 0.5 7.34951 1.14689 8.22114 1.85114C8.65025 2.19785 8.99868 2.5456 9.23959 2.80662C9.35976 2.93682 9.45243 3.04462 9.51424 3.11882C9.54512 3.15589 9.56825 3.18451 9.58319 3.20326L9.5994 3.22378L9.6028 3.22815L9.60299 3.2284C9.60305 3.22847 9.6031 3.22853 9.60315 3.2286L9.60323 3.2287C9.69785 3.35209 9.84449 3.42445 10 3.42445Z"
+                                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </a>
+                                {% endif %}
                             </div>
-                            <a href="product_detail.html" class="product_card-detail">
+                            <a href="{% url 'detail' product.pk %}" class="product_card-detail">
                                 <div class="w-100">
                                     <img class="product_card-img img-fluid" src="{{product.image.url}}"
                                         alt="">
@@ -152,6 +160,12 @@
             <!-- PAGINATION END -->
         </section>
     </main>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+        integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous">
+    </script>
 {% endblock main %}
 
 

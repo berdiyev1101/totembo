@@ -1,10 +1,16 @@
-    <!-- SECTION AUTOMATIC EDITION START -->
-    <section>
-        <h2 class="main_title text-center">Automatic Edition</h2>
-        <div class="container">
-            <div class="row">
-                {% for product in automatic_products %}
-                <form method="post"  class="col-12 col-sm-6 col-md-4 col-lg-3">
+
+{% extends 'base.html' %}
+{% block title %}
+Likes
+{% endblock title %}
+{% block main %}
+<section class="products-section products_section-watches">
+    <!-- SECTION QUARTZ EDITION START -->
+    <h2 class="main_title text-center">Your Liked Products</h2>
+    <div class="container">
+        <div class="row">
+                {% for product in products %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="product_card text-center">
                         <div class="product_card-basket">
                             {% if request.user.is_authenticated %}
@@ -17,7 +23,7 @@
                                           stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
-                         </div>
+                        </div>
                         <a class="product_card-detail" href="{% url 'detail' product.pk %}">
                             <div class="w-100">
                                 <img class="product_card-img img-fluid" src="{{ product.image.url  }}" alt="{{ product.title }}">
@@ -28,11 +34,12 @@
                                 <p class="product_card-price">${{ product.price }}</p>
                             </div>
                         </a>
-                        <a  method = "post" href="{% if request.user.is_authenticated %}{% url 'basket_add' product.pk %}{% else %}{% url 'signin' %}{% endif %}" class="product_card-btn">BUY</a>
+                        <a href="" class="product_card-btn">BUY</a>
                     </div>
-                </form>
+                </div>
                 {% endfor %}
-            </div>
         </div>
-    </section>
-    <!-- SECTION AUTOMATIC EDITION END -->
+    </div>
+    <!-- SECTION QUARTZ EDITION END -->
+
+{% endblock main %}

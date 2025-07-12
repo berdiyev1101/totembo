@@ -1,3 +1,4 @@
+{% load static %}
 {% load totembo_tags %}
 {% get_categories as categories %}
 <header>
@@ -6,14 +7,15 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <a href="#"><img src="images/header_logo.jpg" alt=""></a>
+                    <a href="{% url 'index' %}"><img src="{% static 'images/header_logo.jpg' %}" alt=""></a>
                 </div>
                 <div class="col-sm-8 col-lx-8 m-auto">
                     <ul class="header_nav-menu d-flex justify-content-center flex-wrap text-center">
                         {% for category in categories %}
                         <li class="header_nav-item"><a class="header_nav-link " href="{% url 'category' category.pk %}">{{category.title}}</a></li>
                         {% endfor %}
-
+                        <li class="header_nav-item mt-3 mt-lg-0"><a class="header_nav-link " href="{% url 'contact' %}">CONTACT</a>
+                            </li>
                         {% if request.user.is_authenticated %}
                         <li class="header_nav-item mt-3 mt-lg-0"><a class="header_nav-link " href="{% url 'signout' %}">LOG OUT</a>
                         </li>
@@ -30,19 +32,49 @@
         </div>
 
         <div class="header_panel">
-            <div class="header_panel-item">
-                <img src="images/icons/search_icon.svg" alt="">
-            </div>
-            <div class="header_panel-item">
-                <img src="images/icons/basket_icon.svg" alt="">
-            </div>
-            <div class="header_panel-item">
-                <img src="images/icons/ru_lang_icon.svg" alt="">
-            </div>
-            <div class="header_panel-item">
-                <img src="images/icons/user_icon.svg" alt="">
-            </div>
-        </div>
+    <!-- Search icon -->
+    <div class="header_panel-item">
+        <a href="#" class="btn px-0">
+            <img src="{% static 'images/icons/search_icon.svg' %}" alt="Search">
+        </a>
+    </div>
+
+    <!-- Basket icon (likes or signin based on auth) -->
+    <div class="header_panel-item">
+        {% if request.user.is_authenticated %}
+            {% get_likes_count request.user as like_count %}
+            <a href="{% url 'likes' %}" class="btn px-0">
+                <img src="{% static 'images/icons/basket_icon.svg' %}" alt="Likes">
+            </a>
+        {% else %}
+            <a href="{% url 'signin' %}" class="btn px-0">
+                <img src="{% static 'images/icons/basket_icon.svg' %}" alt="Likes">
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Language icon -->
+    <div class="header_panel-item">
+        {% if request.user.is_authenticated %}
+            {% get_likes_count request.user as like_count %}
+            <a href="{% url 'basket' %}" class="btn px-0">
+               <img src="{% static 'images/icons/ru_lang_icon.svg' %}" alt="Language">
+            </a>
+        {% else %}
+            <a href="{% url 'signin' %}" class="btn px-0">
+                <img src="{% static 'images/icons/ru_lang_icon.svg' %}" alt="Language">
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- User icon -->
+    <div class="header_panel-item">
+        <a href="#" class="btn px-0">
+            <img src="{% static 'images/icons/user_icon.svg' %}" alt="User">
+        </a>
+    </div>
+</div>
+
 
         <!-- BURGER MENU START -->
         <div class="header_lx-panel">
@@ -55,9 +87,9 @@
                     <div>
                         <ul>
                             <li>
-                                <a class="header_nav-link" href=""><img src="images/icons/basket_icon.svg"
+                                <a class="header_nav-link" href=""><img src="{% static 'images/icons/basket_icon.svg' %}"
                                         alt=""></a>
-                                <a class="header_nav-link" href=""><img src="images/icons/ru_lang_icon.svg"
+                                <a class="header_nav-link" href=""><img src="{% static 'images/icons/ru_lang_icon.svg' %}"
                                         alt=""></a>
                             </li>
                             <li class="header_nav-item"><a class="header_nav-link" href="">PROFILE</a></li>
@@ -90,7 +122,7 @@
     <!-- HEADER POSTER START -->
     <div class="header_poster">
         <div class="container">
-            <img class="header_poster-img w-100" src="images/header_poster.jpg" alt="">
+            <img class="header_poster-img w-100" src="{% static 'images/header_poster.jpg' %}" alt="">
         </div>
     </div>
     <!-- HEADER POSTER END -->

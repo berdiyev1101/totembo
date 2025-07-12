@@ -1,14 +1,17 @@
-<section class="products-section products_section-watches">
-    <!-- SECTION QUARTZ EDITION START -->
-    <h2 class="main_title text-center">Quartz Edition</h2>
+{% extends 'base.html' %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block main %}
+    <h2 class="main_title text-center">Your Basket</h2>
     <div class="container">
         <div class="row">
-                {% for product in quartz_products %}
+                {% for product in products %}
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="product_card text-center">
                         <div class="product_card-basket">
                             {% if request.user.is_authenticated %}
-                                <a href="{% url 'like' product.pk %}" class="product_card_basket-link basket_icon">
+                                <a href="{% url 'basket_remove' product.pk %}" class="product_card_basket-link basket_icon">
                             {% else %}
                                     <a href="{% url 'signin' %}" class="product_card_basket-link basket_icon">
                             {% endif %}
@@ -17,21 +20,26 @@
                                           stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
-                         </div>
+                        </div>
                         <a class="product_card-detail" href="{% url 'detail' product.pk %}">
                             <div class="w-100">
-                                <img class="product_card-img img-fluid" src="{{ product.image.url  }}" alt="{{ product.title }}">
+                                <img class="product_card-img img-fluid" src="{{product.product.get_image}}" >
                             </div>
                             <div class="product_card-description">
-                                <p class="product_card-name">{{ product.title }}</p>
-                                <p class="product_card-desc">{{ product.info }}</p>
-                                <p class="product_card-price">${{ product.price }}</p>
+                                <p class="product_card-name">{{ product.product.title }}</p>
+                                <p class="product_card-desc">{{ product.product.info }}</p>
+                                <p class="product_card-price">${{ product.product.price }}</p>
                             </div>
                         </a>
-                        <a href="" class="product_card-btn">BUY</a>
+                        <div class="product_card-quantity d-flex justify-content-center align-items-center">
+                            <form action="{% url 'basket_update' product.pk %}" method="POST" class="d-flex align-items-center">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ product.quantity }}" min="1" class="form-control form-control-sm mx-2" style="width: 60px;">
+                            </form>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
         </div>
     </div>
-    <!-- SECTION QUARTZ EDITION END -->
+{% endblock main %}
